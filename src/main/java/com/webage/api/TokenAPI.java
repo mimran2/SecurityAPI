@@ -26,19 +26,14 @@ public class TokenAPI {
 	//private static Key key = AuthFilter.key;	
 	public static Token appUserToken;
 	
-	@GetMapping
-	public String getAll() {
-		return "jwt-fake-token-asdfasdfasfa".toString();
-	}
-	
 	@PostMapping
-	// public ResponseEntity<?> createTokenForCustomer(@RequestBody Customer customer, HttpRequest request, UriComponentsBuilder uri) {
 	public ResponseEntity<?> createTokenForCustomer(@RequestBody Customer customer) {
 		
 		String username = customer.getName();
 		String password = customer.getPassword();
 		
-		if (username != null && username.length() > 0 && password != null && password.length() > 0 && checkPassword(username, password)) {
+		if (username != null && username.length() > 0 && password != null && password.length() > 0
+				&& checkPassword(username, password)) {
 			Token token = createToken(username);
 			ResponseEntity<?> response = ResponseEntity.ok(token);
 			return response;			
@@ -49,10 +44,6 @@ public class TokenAPI {
 	}
 	
 	private boolean checkPassword(String username, String password) {
-		// special case for application user
-		if(username.equals("ApiClientApp") && password.equals("secret")) {
-			return true;
-		}
 		// make call to customer service 
 		Customer cust = getCustomerByNameFromCustomerAPI(username);
 		
