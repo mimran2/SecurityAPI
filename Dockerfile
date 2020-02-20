@@ -5,6 +5,8 @@ RUN gradle bootJar
 
 FROM openjdk:8-jdk-alpine
 EXPOSE 8081
+ARG ipInput
+ENV  ipAddress=$ipInput
 VOLUME /tmp
 ARG LIBS=app/build/libs
 COPY --from=builder ${LIBS}/ /app/lib
